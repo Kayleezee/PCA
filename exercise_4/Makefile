@@ -8,17 +8,16 @@
 #
 #                             File : Makefile
 #
-#                          Purpose : MVMULTI (Parallel POSIX Threads Version)
+#                          Purpose : MVMULTIPLY (Parallel POSIX Threads Version)
 #
 #*************************************************************************************************
  
 CPP=g++
-CFLAGS = -Wall
+CFLAGS = -pthread
 
 nbody :
-	$(CPP) $(CFLAGS)	src/main.cpp \
-				src/mvmulti.cpp \
-				-o mvmulti
+	$(CPP) $(CFLAGS)	src/mvmultiply.cpp \
+				-o mvmultiply
 
 clean :
-	rm -f mvmulti
+	rm -f mvmultiply
