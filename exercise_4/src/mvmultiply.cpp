@@ -86,7 +86,7 @@ double *dgenVector(int size) {
 **************************************************************************************************/
 
 void **foutMatrix() {
-	cout << "Matrix:\n";
+	cout << "\nMatrix:\n";
 	for(int i = 0; i < size; i++) {
 		for(int j = 0; j < size; j++) {
 			cout << fmatrix[i][j] << "\t";
@@ -96,7 +96,7 @@ void **foutMatrix() {
 }
 
 void **doutMatrix() {
-	cout << "Matrix:\n";
+	cout << "\nMatrix:\n";
 	for(int i = 0; i < size; i++) {
 		for(int j = 0; j < size; j++) {
 			cout << dmatrix[i][j] << "\t";
@@ -110,14 +110,14 @@ void **doutMatrix() {
 **************************************************************************************************/
 
 void **foutVector() {
-	cout << "Vector:\n";	
+	cout << "\nVector:\n";	
 	for(int i = 0; i < size; i++) {
 		cout << fvector[i] << "\n";
 	}
 }
 
 void **doutVector() {
-	cout << "Vector:\n";	
+	cout << "\nVector:\n";	
 	for(int i = 0; i < size; i++) {
 		cout << dvector[i] << "\n";
 	}
@@ -128,14 +128,14 @@ void **doutVector() {
 **************************************************************************************************/
 
 void **foutResult() {
-	cout << "Vector:\n";	
+	cout << "\nResult:\n";	
 	for(int i = 0; i < size; i++) {
 		cout << fresult[i] << "\n";
 	}
 }
 
 void **doutResult() {
-	cout << "Vector:\n";	
+	cout << "\nResult:\n";	
 	for(int i = 0; i < size; i++) {
 		cout << dresult[i] << "\n";
 	}
@@ -177,8 +177,6 @@ void *fmvMultiPar(int Id) {
 	
 	int start = (Id * size) / numThreads;
 	int end = (Id + 1) * (size / numThreads) - 1;
-	cout << start << endl;
-	cout << end << endl;
 	
 	for(int i = start; i <= end; i++) {
 		for(int j = 0; j < size; j++) {
@@ -244,7 +242,7 @@ void print_usage() {
 	cout << "<I iterations for time measurement>" << endl;
 	cout << "<V variable type [0 = float; 1 = double]>" << endl;
 	cout << "<T number of threads>" << endl;
-	cout << "<D display mode  [0 = on; 1 = off]>" << endl;
+	cout << "<D display mode  [1 = on; 0 = off]>" << endl;
 } 
 
 /*************************************************************************************************
@@ -258,7 +256,7 @@ int main(int argc, char **argv) {
 	int iter 	= atoi(argv[3]);
 	int type 	= atoi(argv[4]);
 	numThreads 	= atol(argv[5]);
-	int display 	= 1;//= atoi(argv[3]);
+	int display = atoi(argv[6]);
 	int *p;
 	
 	double dStart = 0.0, dElapsedSeq = 0.0, dElapsedPar = 0.0; 
@@ -276,6 +274,12 @@ int main(int argc, char **argv) {
 		fmatrix = fgenMatrix(size);
 		fvector = fgenVector(size);
 		fresult = new float[size];
+		
+		if((display == 1) && (size <= 10)) {
+			foutMatrix();
+			foutVector();
+			foutResult();
+		}
 		
 		threads = new pthread_t[numThreads];
 		
@@ -295,7 +299,11 @@ int main(int argc, char **argv) {
 		
 		dElapsedPar = dStopGTOD(dStart) / iter;
 		
-		cout << "Type:\t\tFLOAT" << endl;
+		if((display == 1) && (size <= 10)) {
+			foutResult();
+		}
+		
+		cout << "\nType:\t\tFLOAT" << endl;
 		cout << "Time for parallel computation:\t\t" << dElapsedPar << endl;;
 		
 		dStart = dStartGTOD();
@@ -308,10 +316,21 @@ int main(int argc, char **argv) {
 		
 		cout << "Time for sequential computation:\t" << dElapsedSeq << endl;
 		cout << "Speed-Up:\t\t\t\t" << dElapsedSeq/dElapsedPar << endl;
+		
+		delete[] fresult;
+		delete[] fmatrix;
+		delete[] fvector;
+		
 	} else if(type == 1) {
 		dmatrix = dgenMatrix(size);
 		dvector = dgenVector(size);
 		dresult = new double[size];
+		
+		if(display == 1 && size <= 10) {
+			doutMatrix();
+			doutVector();
+			doutResult();
+		}
 		
 		threads = new pthread_t[numThreads];
 		
@@ -331,6 +350,10 @@ int main(int argc, char **argv) {
 		
 		dElapsedPar = dStopGTOD(dStart) / iter;
 		
+		if(display == 1 && size <= 10) {
+			doutResult();
+		}
+		
 		cout << "Type:\t\tDOUBLE" << endl;
 		cout << "Time for parallel computation:\t\t" << dElapsedPar << endl;;
 		
@@ -344,6 +367,11 @@ int main(int argc, char **argv) {
 		
 		cout << "Time for sequential computation:\t" << dElapsedSeq << endl;
 		cout << "Speed-Up:\t\t\t\t" << dElapsedSeq/dElapsedPar << endl;
+		
+		delete[] dresult;
+		delete[] dmatrix;
+		delete[] dvector;
+		
 	} else {
 		cout << endl;
 		cout << "Wrong argument for variable type!" << endl;
