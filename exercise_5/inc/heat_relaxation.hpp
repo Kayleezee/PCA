@@ -25,8 +25,8 @@ typedef struct sGridDouble {
 } sGridDouble;
 
 
-extern sGridDouble dGrid;
-extern int numThreads;
+extern sGridDouble dGrid, dTemp;
+extern int iSize, iNumThreads;
 
 
 /*************************************************************************************************
@@ -94,6 +94,6 @@ void vHeatRelaxGridDoubleSeq(void);
 * 
 * Return:		        Void
 *************************************************************************************************/
-void vHeatRelaxGridDoubleSeq(int *);
+void *vHeatRelaxGridDoublePar(void *);
 
 #endif
