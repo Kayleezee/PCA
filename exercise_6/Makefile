@@ -24,7 +24,7 @@ pi :
 						-o pi
 
 mvmult:
-	&(CPP) %(CFLAGS)	src/part6.3/main.cpp \
+	$(CPP) $(CFLAGS)	src/part6.3/main.cpp \
 						src/part6.3/inc/matrix.cpp \
 						-o mvmult
 
