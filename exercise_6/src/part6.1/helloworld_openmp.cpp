@@ -41,5 +41,7 @@ int main(int argc, char **argv) {
             printf("\nTotal amount of active Threads: %d", omp_get_num_threads());
         }
     }
+    printf("\n");
+
     return EXIT_SUCCESS;
 }

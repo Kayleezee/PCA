@@ -37,6 +37,11 @@ void print_usage() {
  MAIN FUNCTION
 **************************************************************************************************/
 int main(int argc, char **argv) {
+	if(argc != 7) {
+        print_usage();
+        return EXIT_FAILURE;
+	}
+
 	int size    = atoi(argv[1]);
 	int seed    = atoi(argv[2]);
 	int display = atoi(argv[3]);
@@ -49,11 +54,6 @@ int main(int argc, char **argv) {
     double dTimePar = 0.0;
 
 	srand(seed);
-
-	if(argc != 7) {
-        print_usage();
-        return EXIT_FAILURE;
-	}
 
 	cout << "Matrix Vector Multiplication with OpenMP starting ..." << endl;
 

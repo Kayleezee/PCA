@@ -34,14 +34,14 @@ double dx_arctan(int iNumIterations) {
         #pragma omp parallel for reduction(+:dSum) schedule(static)
         for(int i = 0; i <= iNumIterations; i++) {
             int par = omp_in_parallel();
-            printf("\nAm I parallel: %d", par);
+            //printf("\nAm I parallel: %d", par);
             dPosition += dWidth;
             dSum += (4. / (1. + dPosition * dPosition)) * dWidth;
         }
     }
 
     int par = omp_in_parallel();
-    printf("\nAm I parallel: %d", par);
+    //printf("\nAm I parallel: %d", par);
 	return dSum;
 }
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 
 	if(argc != 3) {
         printf("Usage:\n\t");
-        printf("./pi\n\t");
+        printf("./pi\n");
         printf("\t<N number of threads>\n");
         printf("\t<I number of iterations>\n");
         return EXIT_FAILURE;
