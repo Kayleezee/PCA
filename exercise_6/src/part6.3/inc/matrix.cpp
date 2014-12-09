@@ -168,7 +168,7 @@ float *fmvMultiPar(int size, float **matrix, float *vector) {
 	float *new_vector = new float[size];
 	//#pragma omp parallel //shared(matrix, vector, new_vector)
 	//{
-	    #pragma omp parallel for shared(matrix, vector, new_vector) //schedule(dynamic)
+	    #pragma omp parallel for shared(matrix, vector, new_vector) //schedule(runtime)
         for(int i = 0; i < size; i++) {
             new_vector[i] = 0.0;
             for(int j = 0; j < size; j++) {

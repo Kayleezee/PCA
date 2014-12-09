@@ -31,16 +31,16 @@ double dx_arctan(int iNumIterations) {
 
     #pragma omp parallel private(dPosition)
     {
-        #pragma omp parallel for reduction(+:dSum) schedule(static)
+        #pragma omp parallel for reduction(+:dSum)
         for(int i = 0; i <= iNumIterations; i++) {
-            int par = omp_in_parallel();
+            //int par = omp_in_parallel();
             //printf("\nAm I parallel: %d", par);
             dPosition += dWidth;
-            dSum += (4. / (1. + dPosition * dPosition)) * dWidth;
+            dSum += (4. / (1. + dPosition * dPosition)) /* dWidth*/;
         }
     }
 
-    int par = omp_in_parallel();
+    //int par = omp_in_parallel();
     //printf("\nAm I parallel: %d", par);
 	return dSum;
 }
