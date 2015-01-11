@@ -8,7 +8,7 @@
 *
 * File :        main.cpp
 *
-* Purpose :     N-BODY SIMULATION (3D) (Parallel OpenMP Version)
+* Purpose :     N-BODY SIMULATION (2/3D) (Parallel OpenMP Version)
 *
 * Last Change : 22. Dec. 2014
 *
@@ -30,10 +30,10 @@ sBody* initBody(int nbodies, int max) {
     bodys[i].dM = (double)(rand()%100);
     bodys[i].dPx = (double)(rand()%max + 1);
     bodys[i].dPy = (double)(rand()%max + 1);
-    bodys[i].dPz = (double)(rand()%max + 1);
+    //bodys[i].dPz = (double)(rand()%max + 1);
     bodys[i].dVx = 0.0;
     bodys[i].dVy = 0.0;
-    bodys[i].dVz = 0.0;
+    //bodys[i].dVz = 0.0;
   }
 
   return bodys;
@@ -45,28 +45,28 @@ void applyForce(sBody *m1, sBody *m2, double dt) {
 
   double distX = m2->dPx - m1->dPx;
   double distY = m2->dPy - m1->dPy;
-  double distZ = m2->dPz - m1->dPz;
-  double distSquare = abs(distX*distX + distY*distY + distZ*distZ);
+  //double distZ = m2->dPz - m1->dPz;
+  double distSquare = abs(distX*distX + distY*distY /*+ distZ*distZ*/);
 
   double Fx = (G * m1->dM * m2->dM) / distSquare * distX;
   double Fy = (G * m1->dM * m2->dM) / distSquare * distY;
-  double Fz = (G * m1->dM * m2->dM) / distSquare * distZ;
+  //double Fz = (G * m1->dM * m2->dM) / distSquare * distZ;
 
   double ax1 = Fx / m1->dM;
   double ay1 = Fy / m1->dM;
-  double az1 = Fz / m1->dM;
+  //double az1 = Fz / m1->dM;
 
   double ax2 = - Fx / m2->dM;
   double ay2 = - Fy / m2->dM;
-  double az2 = - Fz / m2->dM;
+  //double az2 = - Fz / m2->dM;
 
   m1->dVx += ax1 * dt;
   m1->dVy += ay1 * dt;
-  m1->dVz += az1 * dt;
+  //m1->dVz += az1 * dt;
 
   m2->dVx += ax2 * dt;
   m2->dVy += ay2 * dt;
-  m2->dVz += az2 * dt;
+  //m2->dVz += az2 * dt;
 }
 
 
@@ -75,7 +75,7 @@ void newPos(sBody *body, double dt) {
 
   body->dPx += dt * body->dVx;
   body->dPy += dt * body->dVy;
-  body->dPz += dt * body->dVz;
+  //body->dPz += dt * body->dVz;
 }
 
 
@@ -83,12 +83,12 @@ void newPos(sBody *body, double dt) {
 void outBody(sBody *body) {
   printf("====================================\n");
   printf("Mass: \t\t %.3f \n", body->dM);
-  printf("Position X: \t %.10f \n", body->dPx);
-  printf("Position Y: \t %.10f \n", body->dPy);
-  printf("Position Z: \t %.10f \n", body->dPz);
-  printf("Velocity X: \t %.10f \n", body->dVx);
-  printf("Velocity Y: \t %.10f \n", body->dVy);
-  printf("Velocity Z: \t %.10f \n", body->dVz);
-   printf("====================================\n");
+  printf("Position X: \t %lf \n", body->dPx);
+  printf("Position Y: \t %lf \n", body->dPy);
+  //printf("Position Z: \t %.10f \n", body->dPz);
+  printf("Velocity X: \t %lf \n", body->dVx);
+  printf("Velocity Y: \t %lf \n", body->dVy);
+  //printf("Velocity Z: \t %.10f \n", body->dVz);
+  printf("====================================\n");
 }
 

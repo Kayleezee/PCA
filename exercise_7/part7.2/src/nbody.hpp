@@ -8,7 +8,7 @@
 *
 * File :        main.cpp
 *
-* Purpose :     N-BODY SIMULATION (3D) (Parallel OpenMP Version)
+* Purpose :     N-BODY SIMULATION (2/3D) (Parallel OpenMP Version)
 *
 * Last Change : 22. Dec. 2014
 *
@@ -22,10 +22,10 @@ typedef struct sBody {
   double dM;		// mass
   double dPx;		// x-position
   double dPy;		// y-position
-  double dPz;       // z-position
+  //double dPz;       // z-position
   double dVx;		// velocity in x-direction
   double dVy;		// velocity in y-direction
-  double dVz;       // velocity in z-direction
+  //double dVz;       // velocity in z-direction
 } sBody;
 
 /*************************************************************************************************
